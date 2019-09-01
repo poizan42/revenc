@@ -19,8 +19,14 @@ for _, modname, _ in pkgutil.iter_modules(
 
     try:
         enc = mod.getregentry()
-        if not enc._is_text_encoding:
-            continue
+        try:
+            if not enc._is_text_encoding:
+                continue
+        except AttributeError:
+            try:
+                ''.encode(enc.name)
+            except LookupError:
+                continue
         all_encodings.add(enc.name)
     except AttributeError as e:
         # the `aliases` module doensn't actually provide a codec
