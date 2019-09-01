@@ -28,7 +28,7 @@ for _, modname, _ in pkgutil.iter_modules(
         if 'regentry' not in str(e):
             raise
 
-all_encodings -= set(['unicode-internal', 'undefined', 'mbcs', 'oem', 'raw-unicode-escape', 'unicode-escape'])
+all_encodings -= set(['unicode-internal', 'undefined', 'mbcs', 'oem', 'raw-unicode-escape', 'unicode-escape', 'charmap'])
 all_encodings = sorted(all_encodings)
 
 found = False
