@@ -4,7 +4,6 @@ import sys
 import encodings
 import pkgutil
 
-
 all_encodings = set()
 
 for _, modname, _ in pkgutil.iter_modules(
@@ -35,6 +34,17 @@ for _, modname, _ in pkgutil.iter_modules(
             raise
 
 all_encodings -= set(['unicode-internal', 'undefined', 'mbcs', 'oem', 'raw-unicode-escape', 'unicode-escape', 'charmap'])
+try:
+    import ebcdic
+    all_encodings |= set(ebcdic.codec_names)
+except ModuleNotFoundError:
+    pass
+try:
+    import cbmcodecs
+    all_encodings |= {'petscii-c64en-lc', 'petscii-c64en-uc', 'petscii-vic20en-lc', 'petscii-vic20en-uc', 'screencode-c64-lc', 'screencode-c64-uc'}
+except ModuleNotFoundError:
+    pass
+
 all_encodings = sorted(all_encodings)
 
 found = False
