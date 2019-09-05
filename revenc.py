@@ -33,7 +33,7 @@ for _, modname, _ in pkgutil.iter_modules(
         if 'regentry' not in str(e):
             raise
 
-all_encodings -= set(['unicode-internal', 'undefined', 'mbcs', 'oem', 'raw-unicode-escape', 'unicode-escape', 'charmap'])
+all_encodings -= {'unicode-internal', 'undefined', 'mbcs', 'oem', 'raw-unicode-escape', 'unicode-escape', 'charmap'}
 try:
     import ebcdic
     all_encodings |= set(ebcdic.codec_names)
