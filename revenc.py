@@ -2,6 +2,7 @@
 import re
 import sys
 import encodings
+import codecs
 import pkgutil
 
 all_encodings = set()
@@ -66,6 +67,21 @@ if sys.argv[1] == '-f':
                 found = True
     if not found:
         print('No candidates found')
+elif sys.argv[1] == '-ax':
+    strdata = codecs.decode(sys.argv[2].encode('ascii'), 'hex_codec')
+    values = dict()
+    for enc in all_encodings:
+        try:
+            strdec = strdata.decode(enc)
+        except (LookupError, UnicodeError):
+            continue
+        try:
+            values[strdec] += [enc]
+        except KeyError:
+            values[strdec] = [enc]
+    for (strval, encodings) in values.items():
+        print(', '.join(encodings) + ':')
+        print(strval)
 else:
     strdata = sys.argv[1]
     sval = sys.argv[2]
